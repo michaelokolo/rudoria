@@ -44,16 +44,14 @@ export async function signup(
       select: { id: true, name: true, email: true },
     });
 
-    if (data) {
-      return {
-        message: 'Signup successful',
-        user: {
-          id: data.id,
-          name: data.name as string,
-          email: data.email,
-        },
-      };
-    }
+    return {
+      message: 'Signup successful',
+      user: {
+        id: data.id,
+        name: data.name as string,
+        email: data.email,
+      },
+    };
   } catch (error) {
     console.error('Error during signup:', error);
     return { message: 'An error occurred while processing your request.' };
