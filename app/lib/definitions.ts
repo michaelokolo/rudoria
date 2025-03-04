@@ -25,5 +25,10 @@ export type FormState =
         password?: string[];
       };
       message?: string;
+      user?: {
+        id: string;
+        name: string;
+        email: string;
+      };
     }
   | undefined;
