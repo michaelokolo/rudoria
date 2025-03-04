@@ -7,11 +7,18 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
-
 export default function SignupForm() {
   const [state, action] = useActionState(signup, undefined);
+
   return (
-    <form action={action} className="max-w-md mx-auto bg-white px-8 pt-6  mb-4">
+    <form action={action} className="max-w-md mx-auto bg-white px-8 pt-6 mb-4">
+      {/* Displaying the message at the top */}
+      {state?.message && (
+        <p className="text-red-500 text-center mb-6 text-sm italic">
+          {state.message}
+        </p>
+      )}
+
       <div className="mb-4">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="name">Name</Label>
@@ -56,6 +63,7 @@ export default function SignupForm() {
           </div>
         )}
       </div>
+
       <SignupButton />
     </form>
   );

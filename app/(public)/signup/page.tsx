@@ -7,7 +7,7 @@ export default function Page() {
         <h1 className="text-3xl font-bold">Create an account</h1>
         <p className="text-gray-500">Enter your information to get started</p>
       </div>
-      <div className="mt-6">
+      <div>
         <SignupForm />
       </div>
       <div className=" text-center text-sm">
