@@ -1,4 +1,4 @@
-'use server';
+import 'server-only';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
 import { SignJWT } from 'jose';

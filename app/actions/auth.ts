@@ -1,4 +1,5 @@
 'use server';
+
 import { SignupFormSchema, FormState } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
