@@ -9,7 +9,10 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { createSession, deleteSession } from '@/app/actions/database-session';
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signup(
+  state: FormState,
+  formData: FormData
+): Promise<FormState> {
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
@@ -56,7 +59,10 @@ export async function signup(state: FormState, formData: FormData) {
   await createSession(userId);
 }
 
-export async function login(state: FormState, formData: FormData) {
+export async function login(
+  state: FormState,
+  formData: FormData
+): Promise<FormState> {
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get('email'),
     password: formData.get('password'),

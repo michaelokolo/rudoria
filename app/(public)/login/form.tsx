@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
-export default function SignupForm() {
+export default function LoginForm() {
   const [state, action] = useActionState(login, undefined);
 
   return (
@@ -21,24 +21,8 @@ export default function SignupForm() {
 
       <div className="mb-4">
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="name">Name</Label>
-          <Input type="name" id="name" name="name" placeholder="John Doe" />
-        </div>
-
-        {state?.errors?.name && (
-          <p className="text-red-500 text-xs italic">{state.errors.name}</p>
-        )}
-      </div>
-
-      <div className="mb-4">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="John@example.com"
-          />
+          <Label htmlFor="name">Email</Label>
+          <Input type="email" id="email" name="email" placeholder="m@example" />
         </div>
 
         {state?.errors?.email && (
@@ -46,30 +30,23 @@ export default function SignupForm() {
         )}
       </div>
 
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="email">Password</Label>
           <Input type="password" id="password" name="password" />
         </div>
 
         {state?.errors?.password && (
-          <div className="text-red-500 text-xs italic">
-            <p>Password must:</p>
-            <ul className="list-disc pl-5">
-              {state.errors.password.map((error: string) => (
-                <li key={error}>{error}</li>
-              ))}
-            </ul>
-          </div>
+          <p className="text-red-500 text-xs italic">{state.errors.password}</p>
         )}
       </div>
 
-      <SignupButton />
+      <LoginButton />
     </form>
   );
 }
 
-export function SignupButton() {
+export function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
@@ -78,7 +55,7 @@ export function SignupButton() {
       type="submit"
       className="mt-2 w-full cursor-pointer"
     >
-      {pending ? 'Submitting...' : 'Signup'}
+      {pending ? 'Submitting...' : 'Login'}
     </Button>
   );
 }
