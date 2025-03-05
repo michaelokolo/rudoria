@@ -52,5 +52,5 @@ export async function signup(state: FormState, formData: FormData) {
   const userId = data.id;
   await createSession(userId);
 
-  redirect('/dashboard');
+  
 }
