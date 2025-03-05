@@ -6,6 +6,10 @@ import type { SessionPayload } from '@/lib/definitions';
 import { redirect } from 'next/navigation';
 
 const secretKey = process.env.SECRET;
+
+if (!secretKey) {
+  throw new Error('SECRET environment variable is missing.');
+}
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload) {
@@ -28,7 +32,7 @@ export async function decrypt(session: string | undefined = '') {
 }
 
 export async function createSession(id: string) {
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
 
   await prisma.session.create({
     data: {
@@ -53,32 +57,77 @@ export async function createSession(id: string) {
 }
 
 export async function verifySession() {
+  await prisma.session.deleteMany({
+    where: { expiresAt: { lt: new Date() } },
+  });
   const cookiesStore = await cookies();
-  const cookie = cookiesStore.get('session')?.value;
-  const session = await decrypt(cookie);
+  const sessionToken = cookiesStore.get('session')?.value;
+  const payload = await decrypt(sessionToken);
 
-  if (!session?.userId) {
+  if (!payload?.userId) {
     redirect('/login');
   }
 
-  return { isAuth: true, userId: session.userId };
+  const session = await prisma.session.findFirst({
+    where: {
+      userId: payload.userId,
+      expiresAt: { gte: new Date() },
+    },
+  });
+
+  if (!session) {
+    cookiesStore.delete('session');
+    redirect('/login');
+  }
+
+  return { isAuth: true, userId: payload.userId };
 }
 
 export async function updateSession() {
-  const session = (await cookies()).get('session')?.value;
+  const cookiesStore = await cookies();
+  const session = cookiesStore.get('session')?.value;
   const payload = await decrypt(session);
 
-  if (!session || !payload) {
+  if (!session || !payload?.userId) {
     return null;
   }
 
-  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
 
-  (await cookies()).set('session', session, {
+  await prisma.session.updateMany({
+    where: { userId: payload.userId },
+    data: { expiresAt },
+  });
+
+  const newSessionToken = await encrypt({
+    userId: payload.userId as string,
+    expiresAt,
+  });
+
+  cookiesStore.set('session', newSessionToken, {
     httpOnly: true,
     secure: true,
-    expires: expires,
+    expires: expiresAt,
     sameSite: 'lax',
     path: '/',
   });
+}
+
+export async function deleteSession() {
+  const cookiesStore = await cookies();
+  const session = cookiesStore.get('session')?.value;
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  const payload = await decrypt(session);
+
+  if (payload?.userId) {
+    await prisma.session.deleteMany({
+      where: { userId: payload.userId },
+    });
+  }
+  cookiesStore.delete('session');
+  redirect('/login');
 }
