@@ -2,11 +2,10 @@
 import { SignupFormSchema, FormState } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
+import { createSession } from '@/app/actions/database-session';
+import { redirect } from 'next/navigation';
 
-export async function signup(
-  state: FormState,
-  formData: FormData
-): Promise<FormState> {
+export async function signup(state: FormState, formData: FormData) {
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get('name'),
     email: formData.get('email'),
@@ -22,38 +21,35 @@ export async function signup(
 
   const { name, email, password } = validatedFields.data;
 
-  try {
-    const existingUser = await prisma.user.findUnique({
-      where: { email: email as string },
-    });
+  const existingUser = await prisma.user.findUnique({
+    where: { email: email as string },
+  });
 
-    if (existingUser) {
-      return {
-        message: 'Signup failed. Please try again.',
-      };
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const data = await prisma.user.create({
-      data: {
-        name: name as string,
-        email: email as string,
-        password: hashedPassword,
-      },
-      select: { id: true, name: true, email: true },
-    });
-
+  if (existingUser) {
     return {
-      message: 'Signup successful',
-      user: {
-        id: data.id,
-        name: data.name as string,
-        email: data.email,
-      },
+      message: 'Signup failed. Please try again.',
     };
-  } catch (error) {
-    console.error('Error during signup:', error);
-    return { message: 'An error occurred while processing your request.' };
   }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const data = await prisma.user.create({
+    data: {
+      name: name as string,
+      email: email as string,
+      password: hashedPassword,
+    },
+    select: { id: true, name: true, email: true },
+  });
+
+  if (!data) {
+    return {
+      message: 'An error occurred while creating your account.',
+    };
+  }
+
+  const userId = data.id;
+  await createSession(userId);
+
+  redirect('/dashboard');
 }
