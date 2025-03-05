@@ -7,7 +7,7 @@ import {
 } from '@/lib/definitions';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
-import { createSession } from '@/app/actions/database-session';
+import { createSession, deleteSession } from '@/app/actions/database-session';
 
 export async function signup(state: FormState, formData: FormData) {
   const validatedFields = SignupFormSchema.safeParse({
@@ -88,4 +88,8 @@ export async function login(state: FormState, formData: FormData) {
 
   const userId = user.id;
   await createSession(userId);
+}
+
+export async function logout() {
+  deleteSession();
 }
