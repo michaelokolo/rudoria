@@ -51,3 +51,15 @@ export async function createSession(id: string) {
 
   redirect('/dashboard');
 }
+
+export async function verifySession() {
+  const cookiesStore = await cookies();
+  const cookie = cookiesStore.get('session')?.value;
+  const session = await decrypt(cookie);
+
+  if (!session?.userId) {
+    redirect('/login');
+  }
+
+  return { isAuth: true, userId: session.userId };
+}
