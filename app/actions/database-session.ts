@@ -28,14 +28,18 @@ export async function decrypt(session: string | undefined = '') {
     return payload;
   } catch (error) {
     console.error(error);
-    return null;
+    return null; // consider changing this section.
   }
 }
 
 export async function createSession(id: string) {
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
 
-  await prisma.session.create({
+  await prisma.session.deleteMany({
+    where: { userId: id },
+  });
+
+  const data = await prisma.session.create({
     data: {
       userId: id as string,
       expiresAt,
@@ -43,7 +47,7 @@ export async function createSession(id: string) {
     select: { id: true },
   });
 
-  const session = await encrypt({ userId: id, expiresAt });
+  const session = await encrypt({ userId: data.id, expiresAt });
 
   const cookiesStore = await cookies();
   cookiesStore.set('session', session, {
@@ -52,6 +56,14 @@ export async function createSession(id: string) {
     expires: expiresAt,
     sameSite: 'lax',
     path: '/',
+  });
+
+  await prisma.session.deleteMany({
+    where: {
+      expiresAt: {
+        lt: new Date(),
+      },
+    },
   });
 
   redirect('/dashboard');

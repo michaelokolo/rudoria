@@ -46,10 +46,10 @@ export async function signup(
       email: email as string,
       password: hashedPassword,
     },
-    select: { id: true, name: true, email: true },
+    select: { id: true },
   });
 
-  if (!data) {
+  if (!data || !data.id) {
     return {
       message: 'An error occurred while creating your account.',
     };
