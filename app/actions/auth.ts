@@ -28,7 +28,7 @@ export async function signup(
 
   const { name, email, password } = validatedFields.data;
 
-  const existingUser = await prisma.user.findFirst({
+  const existingUser = await prisma.user.findUnique({
     where: { email: email as string },
   });
 
@@ -75,7 +75,7 @@ export async function login(
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: { email: validatedFields.data.email as string },
   });
 
