@@ -88,12 +88,12 @@ export async function verifySession() {
     },
   });
 
-  if (!session) {
+  if (!session || payload.userId !== session.userId) {
     cookiesStore.delete('session');
     redirect('/login');
   }
 
-  return { isAuth: true, userId: payload.userId };
+  return { isAuth: true, userId: session.userId };
 }
 
 export async function updateSession() {
