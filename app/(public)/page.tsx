@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Features from '@/components/ui/landing/features';
+import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
 
 export default function Page() {
   return (
@@ -17,12 +18,21 @@ export default function Page() {
           </p>
 
           <div className="flex flex-col justify-center sm:justify-start gap-2 min-[400px]:flex-row">
-            <Link
-              className="inline-flex h-10 items-center text-purple-900 justify-center rounded-md border bg-[#edd9f1] border-gray-400 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#d8c3e0] hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 disabled:pointer-events-none disabled:opacity-50"
-              href="/signup"
-            >
-              Sign Up for Free
-            </Link>
+            <SignedIn>
+              <Link
+                className="inline-flex h-10 items-center text-purple-900 justify-center rounded-md border bg-[#edd9f1] border-gray-400 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#d8c3e0] hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                href="/dashboard"
+              >
+                Dashboard
+              </Link>
+            </SignedIn>
+            <SignedOut>
+              <SignInButton>
+                <button className="inline-flex h-10 items-center text-purple-900 justify-center rounded-md border bg-[#edd9f1] border-gray-400 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#d8c3e0] hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 disabled:pointer-events-none disabled:opacity-50">
+                  Sign in
+                </button>
+              </SignInButton>
+            </SignedOut>
           </div>
         </div>
         <div className="flex sm:flex-1 w-full">
