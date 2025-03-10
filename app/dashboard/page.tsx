@@ -1,5 +1,4 @@
-'use client';
-import { AppSidebar } from '@/components/ui/app-sidebar';
+import { AppSidebar } from '@/components/ui/dashboard/app-sidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,18 +6,37 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
+} from '@/components/ui/dashboard/breadcrumb';
+import { Separator } from '@/components/ui/dashboard/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from '@/components/ui/sidebar';
-import { logout } from '@/app/actions/auth';
-import { useActionState } from 'react';
+} from '@/components/ui/dashboard/sidebar';
 
-export default function Page() {
-  const [state, action] = useActionState(logout, undefined);
+import { auth } from '@clerk/nextjs/server';
+import { createClient } from '@supabase/supabase-js';
+import AddTaskForm from '@/components/ui/dashboard/AddTaskForm';
+
+export default async function Page() {
+  const { getToken } = await auth();
+  const clerkToken = await getToken({ template: 'supabase' });
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      global: {
+        headers: {
+          Authorization: `Bearer ${clerkToken}`,
+        },
+      },
+    }
+  );
+
+  const { data: tasks, error } = await supabase.from('tasks').select();
+
+  if (error) throw error;
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -50,12 +68,18 @@ export default function Page() {
           </div>
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>
+        <div className="max-w-2xl mx-auto p-4">
+          <h1 className="text-2xl font-bold mb-4">Tasks</h1>
+          <div className="mb-6">
+            {tasks?.map((task) => (
+              <p key={task.id} className="py-1">
+                {task.name}
+              </p>
+            ))}
+          </div>
+          <AddTaskForm />
+        </div>
       </SidebarInset>
-      <form action={action}>
-        <button type="submit" className="w-full">
-          Logout
-        </button>
-      </form>
     </SidebarProvider>
   );
 }

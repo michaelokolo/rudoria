@@ -1,6 +1,6 @@
 'use client';
 import { useFormStatus } from 'react-dom';
-import { addTask } from '@/app/ssr/actions';
+import { addTask } from '@/app/actions/actions';
 
 export default function AddTaskForm() {
   const { pending } = useFormStatus();
