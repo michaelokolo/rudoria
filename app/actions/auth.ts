@@ -8,6 +8,8 @@ import {
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import { createSession, deleteSession } from '@/app/actions/database-session';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export async function signup(
   state: FormState,
@@ -97,5 +99,8 @@ export async function login(
 }
 
 export async function logout() {
-  deleteSession();
+  //deleteSession();
+  const cookieStore = await cookies();
+  cookieStore.delete('session');
+  redirect('/login');
 }

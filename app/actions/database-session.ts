@@ -1,4 +1,4 @@
-import 'server-only';
+'use server';
 import { cookies } from 'next/headers';
 import prisma from '@/lib/prisma';
 import { SignJWT, jwtVerify } from 'jose';
@@ -130,17 +130,17 @@ export async function deleteSession() {
   const cookiesStore = await cookies();
   const session = cookiesStore.get('session')?.value;
 
-  if (!session) {
-    redirect('/login');
-  }
+  // if (!session) {
+  //   redirect('/login');
+  // }
 
-  const payload = await decrypt(session);
+  // const payload = await decrypt(session);
 
-  if (payload?.userId) {
-    await prisma.session.deleteMany({
-      where: { userId: payload.userId },
-    });
-  }
+  // if (payload?.userId) {
+  //   await prisma.session.deleteMany({
+  //     where: { userId: payload.userId },
+  //   });
+  // }
   cookiesStore.delete('session');
   redirect('/login');
 }

@@ -1,3 +1,4 @@
+'use client';
 import { AppSidebar } from '@/components/ui/app-sidebar';
 import {
   Breadcrumb,
@@ -13,8 +14,11 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { logout } from '@/app/actions/auth';
+import { useActionState } from 'react';
 
 export default function Page() {
+  const [state, action] = useActionState(logout, undefined);
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -47,6 +51,11 @@ export default function Page() {
           <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
         </div>
       </SidebarInset>
+      <form action={action}>
+        <button type="submit" className="w-full">
+          Logout
+        </button>
+      </form>
     </SidebarProvider>
   );
 }
