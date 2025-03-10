@@ -1,4 +1,3 @@
-import LogoutButton from '@/app/dashboard/logout-button';
 export default function Layout({
   children,
 }: Readonly<{
@@ -9,7 +8,6 @@ export default function Layout({
       {/* Main Content */}
       <main className="container mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className=" bg-white ">
-          <LogoutButton />
           <div className="px-4 py-5 sm:p-6">{children}</div>
         </div>
       </main>
