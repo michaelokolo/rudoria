@@ -36,7 +36,7 @@ export default function Page() {
           </div>
         </div>
         <div className="flex sm:flex-1 w-full">
-          <img src="/booklover.gif" alt="storyset of a woman reading" />
+          <img src="/booklover1.png" alt="storyset of a woman reading" />
         </div>
       </div>
       {/* Features Section */}
