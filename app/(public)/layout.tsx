@@ -1,13 +1,3 @@
-import Link from 'next/link';
-import { Bars3Icon } from '@heroicons/react/20/solid';
-
-const links = [
-  { href: '#', title: 'Home' },
-  { href: '#', title: 'About' },
-  { href: '#', title: 'Services' },
-  { href: '#', title: 'Contact' },
-];
-
 export default function Layout({
   children,
 }: Readonly<{

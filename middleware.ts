@@ -1,9 +1,10 @@
-// import { NextRequest, NextResponse } from 'next/server';
-// import { decrypt } from '@/app/actions/database-session';
-// import { cookies } from 'next/headers';
-import { clerkMiddleware } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-export default clerkMiddleware();
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)']);
+
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) await auth.protect();
+});
 
 export const config = {
   matcher: [
