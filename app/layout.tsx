@@ -38,11 +38,11 @@ export default function RootLayout({
         >
           <header className="flex justify-end items-center p-4 gap-4 h-16">
             <SignedOut>
-              {/* <SignUpButton>
+              <SignUpButton>
                 <button className="inline-flex h-10 items-center justify-center rounded-md border-2 hover:bg-indigo-600 cursor-pointer border-indigo-600 bg-transparent px-8 text-sm font-medium text-indigo-600  transition-colors hover:bg-indigo-650 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 disabled:opacity-50">
                   Sign up
                 </button>
-              </SignUpButton> */}
+              </SignUpButton>
 
               <SignInButton>
                 <button className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-indigo-600  px-8 text-sm font-medium  transition-colors hover:bg-indigo-650 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50">
