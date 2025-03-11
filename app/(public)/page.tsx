@@ -20,7 +20,7 @@ export default function Page() {
           <div className="flex flex-col justify-center sm:justify-start gap-2 min-[400px]:flex-row">
             <SignedIn>
               <Link
-                className="inline-flex h-10 items-center text-purple-900 justify-center rounded-md border bg-[#edd9f1] border-gray-400 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#d8c3e0] hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 disabled:pointer-events-none disabled:opacity-50"
+                className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-purple-900 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-purple-950 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50"
                 href="/dashboard"
               >
                 Dashboard
@@ -28,8 +28,8 @@ export default function Page() {
             </SignedIn>
             <SignedOut>
               <SignInButton>
-                <button className="inline-flex h-10 items-center text-purple-900 justify-center rounded-md border bg-[#edd9f1] border-gray-400 px-8 text-sm font-medium shadow-sm transition-colors hover:bg-[#d8c3e0] hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 disabled:pointer-events-none disabled:opacity-50">
-                  Sign in
+                <button className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-purple-900  px-8 text-sm font-medium shadow-sm transition-colors hover:bg-purple-950 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50">
+                  Get started
                 </button>
               </SignInButton>
             </SignedOut>
@@ -39,6 +39,7 @@ export default function Page() {
           <img src="/booklover1.png" alt="storyset of a woman reading" />
         </div>
       </div>
+
       {/* Features Section */}
       <Features />
     </div>
