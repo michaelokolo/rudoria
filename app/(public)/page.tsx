@@ -28,7 +28,7 @@ export default function Page() {
             </SignedIn>
             <SignedOut>
               <SignInButton>
-                <button className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-purple-900  px-8 text-sm font-medium shadow-sm transition-colors hover:bg-purple-950 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50">
+                <button className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-indigo-600  px-8 text-sm font-medium shadow-sm transition-colors hover:bg-indigo-600 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50">
                   Get started
                 </button>
               </SignInButton>
