@@ -8,6 +8,7 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs';
+import Link from 'next/link';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -46,12 +47,12 @@ export default function RootLayout({
               </div>
 
               {/* Text with gradient */}
-              <a
+              <Link
                 href="/"
                 className="text-2xl font-bold leading-7 bg-gradient-to-r from-indigo-900  text-transparent bg-clip-text"
               >
                 Rudoria
-              </a>
+              </Link>
             </div>
             <SignedOut>
               <SignInButton>
