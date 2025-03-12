@@ -35,35 +35,45 @@ const features = [
 export default function FeaturesSection() {
   return (
     <div className="bg-white py-12 sm:py-16">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-purple-900">
+          <h2 className="text-base font-semibold leading-7 text-indigo-600">
             Boost Your Reading
           </h2>
           <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Track, Achieve, and Connect
           </p>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-base leading-7 text-gray-600">
             Unlock the power of intentional reading. Set goals, track progress,
             and connect with fellow book lovers on our intuitive platform.
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
-            {features.map((feature) => (
-              <div key={feature.name} className="relative pl-16">
-                <dt className="text-base font-semibold leading-7 text-gray-900">
-                  <div className="absolute top-0 left-0 flex h-10 w-10 items-center justify-center rounded-lg bg-[#edd9f1] text-purple-800">
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
+          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-8 lg:grid-cols-2">
+              {features.map((feature) => (
+                <div
+                  key={feature.name}
+                  className="grid grid-cols-1 sm:grid-cols-[48px_1fr] gap-4"
+                >
+                  <div className="flex items-center justify-center sm:items-start sm:justify-start">
+                    <div className="flex items-center justify-center w-10 h-10 bg-indigo-600 rounded-lg text-white">
+                      <feature.icon className="h-6 w-6" aria-hidden="true" />
+                    </div>
                   </div>
-                  {feature.name}
-                </dt>
-                <dd className="mt-2 text-base leading-7 text-gray-600">
-                  {feature.description}
-                </dd>
-              </div>
-            ))}
-          </dl>
+
+                  <div className="flex flex-col">
+                    <h3 className="text-lg font-semibold leading-7 text-gray-900">
+                      {feature.name}
+                    </h3>
+                    <p className="mt-2 text-base leading-7 text-gray-600 ">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

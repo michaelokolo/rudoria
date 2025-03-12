@@ -4,7 +4,6 @@ import './globals.css';
 import {
   ClerkProvider,
   SignInButton,
-  SignUpButton,
   SignedIn,
   SignedOut,
   UserButton,
@@ -36,16 +35,27 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignUpButton>
-                <button className="inline-flex h-10 items-center justify-center rounded-md border-2 hover:bg-indigo-600 cursor-pointer border-indigo-600 bg-transparent px-8 text-sm font-medium text-indigo-600  transition-colors hover:bg-indigo-650 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 disabled:opacity-50">
-                  Sign up
-                </button>
-              </SignUpButton>
+          <header className="flex justify-between items-center p-12 gap-4 h-16">
+            <div className="flex items-center gap-2">
+              {/* Logo - 4 small squares in a 2x2 grid */}
+              <div className="relative w-8 h-8 grid grid-cols-2 grid-rows-2 gap-0.5">
+                <div className="bg-indigo-600 rounded-sm"></div>
+                <div className="bg-pink-800 rounded-sm"></div>
+                <div className="bg-pink-500 rounded-sm"></div>
+                <div className="bg-indigo-600 rounded-sm"></div>
+              </div>
 
+              {/* Text with gradient */}
+              <a
+                href="/"
+                className="text-2xl font-bold leading-7 bg-gradient-to-r from-indigo-900  text-transparent bg-clip-text"
+              >
+                Rudoria
+              </a>
+            </div>
+            <SignedOut>
               <SignInButton>
-                <button className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-indigo-600  px-8 text-sm font-medium  transition-colors hover:bg-indigo-650 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50">
+                <button className="inline-flex h-10 items-center text-white justify-center rounded-md border bg-indigo-600  px-8 text-sm font-medium  transition-colors hover:bg-indigo-500 cursor-pointer focus-visible:outline-none focus-visible:ring-2 disabled:opacity-50">
                   Sign in
                 </button>
               </SignInButton>
