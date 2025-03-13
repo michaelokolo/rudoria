@@ -1,6 +1,6 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
-import Features from '@/components/ui/landing/features';
+import Features from '@/components/landing/features';
 
 export default function Page() {
   return (
@@ -50,7 +50,9 @@ export default function Page() {
                 </SignInButton>
               </SignedOut>
               <SignedIn>
-                <UserButton />
+                <div className="scale-125">
+                  <UserButton />
+                </div>
               </SignedIn>
             </div>
           </div>
