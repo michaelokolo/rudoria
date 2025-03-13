@@ -6,7 +6,6 @@ import {
   DocumentIcon,
   ChartBarIcon,
   CogIcon,
-  BellIcon,
 } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 import Link from 'next/link';
